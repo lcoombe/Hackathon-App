@@ -9,6 +9,8 @@ app.get('/', function (req, res) {
    res.sendFile(__dirname + "/public/index.html");
 })
 
+app.use(express.static('public'));
+
 
 // This responds a POST request for the homepage
 app.post('/', function (req, res) {
@@ -40,7 +42,7 @@ http.createServer(function (req, res) {
 }).listen(8124, "127.0.0.1");
 console.log('Server running at http://127.0.0.1:8124/');
 
-var server = app.listen(8081, function () {
+var server = app.listen(3000, function () {
 
   var host = server.address().address
   var port = server.address().port
