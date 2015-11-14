@@ -23,7 +23,7 @@
   
     <div id="map"></div>
     <script type="text/javascript">
-
+var bustops = [];
 var map;
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -32,13 +32,26 @@ function initMap() {
   });
 }
 
+
     </script>
     <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsHbib3aGBwsO6ySVqCJcZUaAQjtNlqsc&callback=initMap">
     </script>
     
-    <button class="btn btn-default" type="button" id="map-click">Click Here!</button>
-    <h2>Footer Of the Map</h2>
+   <!--   <button class="btn btn-default" type="button" id="map-click">Click Here!</button> -->
+    <div class="container">
+    <div class="row hold-bottom">
+      <div class="col-lg-6">
+        <div class="input-group">
+          <input type="text" class="form-control" id='msg' placeholder="Type your message...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" id='map-click'>Send!</button>
+            </span>
+        </div><!-- /input-group -->
+      </div><!-- /.col-lg-6 -->
+    </div><!-- /.row -->
+
+  </div><!-- /.container -->
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="map.js"></script>

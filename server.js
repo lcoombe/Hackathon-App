@@ -36,6 +36,10 @@ app.get('/ab*cd', function(req, res) {
    res.send('Page Pattern Match');
 })
 
+app.post('/stops', function(req, res) {
+	
+})
+
 http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/plain'});
   res.end('Hello World\n');
