@@ -47,7 +47,10 @@ $("#map-click").click(function() {
 			  
 			  $.ajax({
 				type:"GET",
-				url: ""
+				url: "https://maps.googleapis.com/maps/api/directions/json?origin="+positionLat+","+positionLong+"&destination="+LatVal+","+LongVal+"&mode=transit&key=AIzaSyCsrCtwcFmgZUeriwZoReYSq9wV9aWJ_cE",
+				success: function(data){
+					console.log(data);
+				}
 			  })
 			  
 			  $.ajax({
