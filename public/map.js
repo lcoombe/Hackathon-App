@@ -21,6 +21,7 @@ function showPosition(position) {
 
 
 
+
 $("#map-click").click(function() {
 	getLocation();
 	console.log("Got here!");
@@ -45,13 +46,6 @@ $("#map-click").click(function() {
 			  var LatVal = $Lat[0].innerHTML;
 			  var LongVal = $Long[0].innerHTML;
 			  
-			  $.ajax({
-				type:"GET",
-				url: "https://maps.googleapis.com/maps/api/directions/json?origin="+positionLat+","+positionLong+"&destination="+LatVal+","+LongVal+"&mode=transit&key=AIzaSyCsrCtwcFmgZUeriwZoReYSq9wV9aWJ_cE",
-				success: function(data){
-					console.log(data);
-				}
-			  })
 			  
 			  $.ajax({
 				  type:"GET",
@@ -99,11 +93,8 @@ $("#map-click").click(function() {
 					  
 					  
 					  
-					  
-					  
 				  }
-				  
-				  
+				 				  
 				  
 			  })
 			  
@@ -119,3 +110,4 @@ $("#map-click").click(function() {
 	
 
 });
+
