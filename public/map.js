@@ -1,5 +1,7 @@
 var positionLat;
 var positionLong;
+var nextBus;
+var nextLeaveTime;
 
 
 function getLocation() {
@@ -16,6 +18,12 @@ function showPosition(position) {
     //"<br>Longitude: " + position.coords.longitude; 
 	console.log(positionLat);
 	console.log(positionLong);
+};
+
+function showBusInfo(bus,time, stopNumber){
+	var msg = "The next "+ bus+" leaves at " + time +" from stop number " + stopNumber +"."; 
+	var new_msg = $('<li>').text(msg);
+	 $('#nextbus').append(new_msg);
 };
 
 
@@ -41,6 +49,26 @@ $("#map-click").click(function() {
 			  console.log($Long[0].innerHTML);		  
 			  var LatVal = $Lat[0].innerHTML;
 			  var LongVal = $Long[0].innerHTML;
+			  
+			  $.ajax({
+				  type:"GET",
+				  url: "http://cors.io/?u=http://api.translink.ca/rttiapi/v1/stops/"+stopNum+"/estimates?apikey=7EbbVN4Jf3yAJSeOV59e&count=3&timeframe=120",
+				  success: function(data) {
+					  
+					 console.log(data);
+					 xmlDocument = $.parseXML(data);
+					 $xmlDoc = $(xmlDocument);
+					 $routeNum = $xmlDoc.find("RouteNo");
+					 nextBus = $routeNum[0].innerHTML;
+					 console.log($routeNum[0].innerHTML);
+					 $expectedLeaveTime = $xmlDoc.find("ExpectedLeaveTime");
+					 nextLeaveTime = $expectedLeaveTime[0].innerHTML;
+					 console.log($expectedLeaveTime[0].innerHTML);
+					showBusInfo(nextBus,nextLeaveTime,stopNum);
+				  }	 				  
+				  
+			  })
+
 			  
 			  
 			  $.ajax({
@@ -99,6 +127,6 @@ $("#map-click").click(function() {
 		});
 	
 	
-
+//showBusInfo();
 });
 
