@@ -18,11 +18,55 @@ $("#map-click").click(function() {
 			  $Long = $xml.find("Longitude");
 			  console.log($Long[0].innerHTML);
 			  
+			  var LatVal = $Lat[0].innerHTML;
+			  var LongVal = $Long[0].innerHTML;
+			  
 			  $.ajax({
 				  type:"GET",
-				  url: "http://cors.io/?u=https://developers.zomato.com/api/v2.1/search?lat=49.2827&lon=-123.1207&radius=100&sort=real_distance",
+				  url: "https://developers.zomato.com/api/v2.1/search?lat=" + $Lat[0].innerHTML + "&lon=" + $Long[0].innerHTML + "&radius=400&apikey=40b2fe93e6a1e1e123e6f67b846a5696",
 				  success: function(data) {
-					  var restaurants = JSON.parse(data);
+					  
+					  for (var i = 0; i<data.restaurants.length; i++ ) {
+						  var name = data.restaurants[i].restaurant.name;
+						  var lat = data.restaurants[i].restaurant.location.latitude;
+						  var long = data.restaurants[i].restaurant.location.longitude;
+						  
+						  var myLatlng = new google.maps.LatLng(lat, long);
+						  var marker = new google.maps.Marker({
+							    position: myLatlng,
+							    title:name,
+							    map:map
+							});
+
+							// To add the marker to the map, call setMap();
+							
+							
+							var infoWindow = new google.maps.InfoWindow({
+							});
+							
+							
+							
+							google.maps.event.addListener(marker, 'click', function() {
+								infoWindow.setContent(this.title);
+								  infoWindow.open(map, this)
+								  
+								  
+							  });
+							  marker.setMap(map);
+							 // map.center = myLatlng;
+							  map.panTo(myLatlng);
+							  map.setZoom(15);
+							  
+							  //map.zoom = 20;
+							  
+						  console.log(lat + " " + long);
+						  console.log(name);
+						  
+						  //console.log(rest);
+					  }
+					  
+					  
+					  
 					  
 					  
 				  }
@@ -36,15 +80,6 @@ $("#map-click").click(function() {
 			  
 			  
 			  
-			  
-			  var myLatlng = new google.maps.LatLng($Lat[0].innerHTML,$Long[0].innerHTML);
-			  var marker = new google.maps.Marker({
-				    position: myLatlng,
-				    title:"Hello World!"
-				});
-
-				// To add the marker to the map, call setMap();
-				marker.setMap(map);
 		  },
 		  crossDomain: true
 		});
