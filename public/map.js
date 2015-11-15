@@ -19,9 +19,6 @@ function showPosition(position) {
 };
 
 
-
-
-
 $("#map-click").click(function() {
 	getLocation();
 	console.log("Got here!");
@@ -41,8 +38,7 @@ $("#map-click").click(function() {
 			  $Lat = $xml.find( "Latitude" );
 			  console.log($Lat[0].innerHTML);
 			  $Long = $xml.find("Longitude");
-			  console.log($Long[0].innerHTML);
-			  
+			  console.log($Long[0].innerHTML);		  
 			  var LatVal = $Lat[0].innerHTML;
 			  var LongVal = $Long[0].innerHTML;
 			  
@@ -69,8 +65,7 @@ $("#map-click").click(function() {
 							
 							var infoWindow = new google.maps.InfoWindow({
 							});
-							
-							
+								
 							
 							google.maps.event.addListener(marker, 'click', function() {
 								infoWindow.setContent(this.title);
@@ -97,11 +92,7 @@ $("#map-click").click(function() {
 				 				  
 				  
 			  })
-			  
-			  
-			  
-			  
-			  
+			  	  		  
 			  
 		  },
 		  crossDomain: true
