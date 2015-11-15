@@ -1,4 +1,28 @@
+var positionLat;
+var positionLong;
+
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        console.log("not using geolocation");
+    };
+};
+function showPosition(position) {
+	positionLat = position.coords.latitude;
+	positionLong = position.coords.longitude;
+   // x.innerHTML = "Latitude: " + position.coords.latitude + 
+    //"<br>Longitude: " + position.coords.longitude; 
+	console.log(positionLat);
+	console.log(positionLong);
+};
+
+
+
+
 $("#map-click").click(function() {
+	getLocation();
 	console.log("Got here!");
 	var stopNum = $('#msg').val();
 	console.log(stopNum);
@@ -20,6 +44,11 @@ $("#map-click").click(function() {
 			  
 			  var LatVal = $Lat[0].innerHTML;
 			  var LongVal = $Long[0].innerHTML;
+			  
+			  $.ajax({
+				type:"GET",
+				url: ""
+			  })
 			  
 			  $.ajax({
 				  type:"GET",
