@@ -3,6 +3,8 @@ var positionLong;
 var nextBus;
 var nextLeaveTime;
 
+getLocation();
+
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -26,9 +28,65 @@ function showBusInfo(bus,time, stopNumber){
 	 $('#nextbus').append(new_msg);
 };
 
+$("#near-me").click(function(){
+	//getLocation();
+	$.ajax({
+		  type:"GET",
+		  url: "https://developers.zomato.com/api/v2.1/search?lat=" + positionLat + "&lon=" + positionLong + "&radius=400&apikey=40b2fe93e6a1e1e123e6f67b846a5696",
+		  success: function(data) {
+			  
+			  for (var i = 0; i<data.restaurants.length; i++ ) {
+				  var name = data.restaurants[i].restaurant.name;
+				  var lat = data.restaurants[i].restaurant.location.latitude;
+				  var long = data.restaurants[i].restaurant.location.longitude;
+				  var address = data.restaurants[i].restaurant.location.address;
+				  
+				  var image = 'star.png';
+				  var myLatlng = new google.maps.LatLng(lat, long);
+				  var marker = new google.maps.Marker({
+					    position: myLatlng,
+					    title:name + "<br>" + address,
+					    map:map,
+					    icon:image
+					});
+
+					// To add the marker to the map, call setMap();
+					
+					
+					var infoWindow = new google.maps.InfoWindow({
+					});
+						
+					
+					google.maps.event.addListener(marker, 'click', function() {
+						infoWindow.setContent(this.title);
+						  infoWindow.open(map, this)
+						  
+						  
+					  });
+					  marker.setMap(map);
+					 // map.center = myLatlng;
+					  map.panTo(myLatlng);
+					  map.setZoom(15);
+					  
+					  //map.zoom = 20;
+					  
+				  console.log(lat + " " + long);
+				  console.log(name);
+				  
+				  //console.log(rest);
+			  }
+			  
+			  
+			  
+		  },
+	crossDomain: true
+		  
+	  });
+});
+
 
 $("#map-click").click(function() {
-	getLocation();
+	//getLocation();
 	console.log("Got here!");
 	var stopNum = $('#msg').val();
 	console.log(stopNum);
@@ -80,11 +138,12 @@ $("#map-click").click(function() {
 						  var name = data.restaurants[i].restaurant.name;
 						  var lat = data.restaurants[i].restaurant.location.latitude;
 						  var long = data.restaurants[i].restaurant.location.longitude;
+						  var address = data.restaurants[i].restaurant.location.address;
 						  
 						  var myLatlng = new google.maps.LatLng(lat, long);
 						  var marker = new google.maps.Marker({
 							    position: myLatlng,
-							    title:name,
+							    title:name +"<br>" + address,
 							    map:map
 							});
 
