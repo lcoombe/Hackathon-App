@@ -3,8 +3,11 @@ var positionLong;
 var nextBus;
 var nextLeaveTime;
 
+var markers = [];
+
 getLocation();
 
+//gets your current location
 
 function getLocation() {
     if (navigator.geolocation) {
@@ -13,6 +16,8 @@ function getLocation() {
         console.log("not using geolocation");
     };
 };
+
+//gets your lat and long
 function showPosition(position) {
 	positionLat = position.coords.latitude;
 	positionLong = position.coords.longitude;
@@ -22,6 +27,16 @@ function showPosition(position) {
 	console.log(positionLong);
 };
 
+//clears all markers off map
+
+function clearMarkers(){
+	    for(i=0; i<markers.length; i++){
+	        markers[i].setMap(null);
+	    
+	};
+};
+
+//displays information about when the next bus will leave from a stop
 function showBusInfo(bus,time, stopNumber){
 	var msg = "The next "+ bus+" leaves at " + time +" from stop number " + stopNumber +"."; 
 	var new_msg = $('<li>').text(msg);
@@ -34,6 +49,8 @@ $("#near-me").click(function(){
 		  type:"GET",
 		  url: "https://developers.zomato.com/api/v2.1/search?lat=" + positionLat + "&lon=" + positionLong + "&radius=400&apikey=40b2fe93e6a1e1e123e6f67b846a5696",
 		  success: function(data) {
+			  
+			  clearMarkers();
 			  
 			  for (var i = 0; i<data.restaurants.length; i++ ) {
 				  var name = data.restaurants[i].restaurant.name;
@@ -64,6 +81,7 @@ $("#near-me").click(function(){
 						  
 					  });
 					  marker.setMap(map);
+					  markers.push(marker);
 					 // map.center = myLatlng;
 					  map.panTo(myLatlng);
 					  map.setZoom(15);
@@ -98,6 +116,7 @@ $("#map-click").click(function() {
 
 		  //data: data,
 		  success: function(data) {
+			  clearMarkers();
 			  console.log(data);
 			  xmlDoc = $.parseXML( data ),
 			  $xml = $( xmlDoc ),
@@ -161,6 +180,7 @@ $("#map-click").click(function() {
 								  
 							  });
 							  marker.setMap(map);
+							  markers.push(marker);
 							 // map.center = myLatlng;
 							  map.panTo(myLatlng);
 							  map.setZoom(15);
