@@ -44,6 +44,12 @@ function showBusInfo(bus,time, stopNumber){
 };
 
 $("#near-me").click(function(){
+	if (positionLat == undefined || positionLong == undefined){
+		var errorMessage = "Cannot get places near you, please enable Geolocation!";
+		var noLocation = $("<li>").text(errorMessage);
+		$('#nextbus').append(noLocation);
+		return;
+	};
 	//getLocation();
 	$.ajax({
 		  type:"GET",
