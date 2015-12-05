@@ -164,12 +164,13 @@ $("#map-click").click(function() {
 						  var lat = data.restaurants[i].restaurant.location.latitude;
 						  var long = data.restaurants[i].restaurant.location.longitude;
 						  var address = data.restaurants[i].restaurant.location.address;
-						  
+						  var image = 'blueStar.png';
 						  var myLatlng = new google.maps.LatLng(lat, long);
 						  var marker = new google.maps.Marker({
 							    position: myLatlng,
 							    title:name +"<br>" + address,
-							    map:map
+							    map:map,
+							    icon:image
 							});
 
 							// To add the marker to the map, call setMap();
